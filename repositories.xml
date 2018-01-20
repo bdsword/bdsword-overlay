@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "http://www.gentoo.org/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name>bdsword</name>
+    <description lang="en">Personal overlay</description>
+    <homepage>https://github.com/bdsword/bdsword-overlay</homepage>
+    <owner type="person">
+      <email>thetruebloodsword@gmail.com</email>
+      <name>BDSword</name>
+    </owner>
+    <source type="git">https://github.com/bdsword/bdsword-overlay.git</source>
+    <source type="git">git://github.com/bdsword/bdsword-overlay.git</source>
+    <source type="git">git@github.com:bdsword/bdsword-overlay.git</source>
+    <feed>https://github.com/bdsword/bdsword-overlay/commits/master.atom</feed>
+  </repo>
+  <!-- vim:se et sw=2 ts=2 sts=2 :-->
+</repositories>
