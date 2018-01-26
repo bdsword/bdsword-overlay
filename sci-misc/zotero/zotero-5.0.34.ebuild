@@ -9,7 +9,7 @@ inherit eutils
 DESCRIPTION="Zotero [zoh-TAIR-oh] is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 HOMEPAGE="https://www.zotero.org/"
 
-SRC_URI="amd64? ( https://download.zotero.org/client/release/${PV}/Zotero-${PV}_linux-x86_64.tar.bz2 )
+SRC_URI="amd64? ( https://download.zotero.org/client/release/${PV}/Zotero-${PV}_linux-x86_64.tar.bz2 ) 
 		x86? ( https://download.zotero.org/client/release/${PV}/Zotero-${PV}_linux-i686.tar.bz2 ) "
 
 LICENSE="GPL-3"
