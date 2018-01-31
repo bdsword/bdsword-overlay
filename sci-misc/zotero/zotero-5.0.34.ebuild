@@ -5,6 +5,7 @@
 EAPI="5"
 
 inherit eutils
+inherit xdg-utils
 
 DESCRIPTION="Zotero [zoh-TAIR-oh] is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources."
 HOMEPAGE="https://www.zotero.org/"
@@ -31,43 +32,41 @@ S=${WORKDIR}/${PN}
 
 src_unpack() {
 	if use x86; then
-		unpack ${P}_linux-i686.tar.bz2
-		mv ${PN}_linux-i686 ${PN}
+		unpack Zotero-${PV}_linux-i686.tar.bz2
+		mv Zotero_linux-i686 ${PN}
 	fi
-	if	use amd64; then
-		unpack ${P}_linux-x86_64.tar.bz2
-		mv ${PN}_linux-x86_64 ${PN}
+	if use amd64; then
+		unpack Zotero-${PV}_linux-x86_64.tar.bz2
+		mv Zotero_linux-x86_64 ${PN}
 	fi
 
 }
+
 src_prepare() {
-	sed -i -e "s|MOZ_PROGRAM=\"\"|MOZ_PROGRAM=\"/opt/${PN}/zotero\"|g" ${S}/run-zotero.sh
+	sed -i 's/Exec=.*/Exec=zotero/g' ${S}/${PN}.desktop
+	sed -i 's/Icon=zotero.ico/Icon=zotero/g' ${S}/${PN}.desktop
 }
 
 src_install() {
-
 	# install zotero files to /opt/Zotero
 	insinto /opt/${PN}
 	doins -r ${S}/* || die "Installing files failed"
 
-	newicon -s 16 chrome/icons/default/default16.png zotero.png
-	newicon -s 32 chrome/icons/default/default32.png zotero.png
-	newicon -s 48 chrome/icons/default/default48.png zotero.png
+	for size in 16 32 48 256; do
+		newicon -s ${size} chrome/icons/default/default${size}.png zotero.png
+	done
+
+	fperms +x /opt/${PN}/zotero /opt/${PN}/zotero-bin
+	dosym /opt/${PN}/zotero /opt/bin/zotero
 	
-# 	dodir /usr/share/applications/
-#	echo "[Desktop Entry]
-# 	Name=Zotero
-# 	Comment=Open-source reference manager (standalone version)
-# 	Exec=/usr/bin/zotero %f
-# 	Icon=zotero
-# 	Type=Application
-# 	StartupNotify=true
-# 	Categories=Office;Education;Science;" > ${D}/usr/share/applications/${PN}.desktop
-	domenu ${FILESDIR}/${PN}.desktop
-	
-	# make zotero executable
-	fperms +x /opt/${PN}/zotero /opt/${PN}/run-zotero.sh
-	
-	dosym /opt/${PN}/run-zotero.sh /usr/bin/zotero
+	domenu /opt/${PN}/${PN}.desktop
+}
+
+pkg_postinst() {
+	xdg_desktop_database_update
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
 }
 
